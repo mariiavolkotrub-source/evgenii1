@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>City, Comparatives & Directions – A2</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+.container {
+  max-width: 820px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.3);
+}
+.header {
+  background: linear-gradient(135deg, #f97316, #dc2626);
+  color: white;
+  padding: 28px 30px;
+  text-align: center;
+}
+.header h1 { font-size: 1.7em; margin-bottom: 6px; }
+.header p  { opacity: 0.85; font-size: 0.95em; }
+
+/* TABS */
+.tabs { display: flex; background: #f2f2f2; border-bottom: 2px solid #e0e0e0; overflow-x: auto; }
+.tab {
+  flex: 1; padding: 13px 6px; border: none; background: none;
+  cursor: pointer; font-size: 0.76em; font-weight: 700; color: #999;
+  border-bottom: 3px solid transparent; transition: all 0.2s;
+  white-space: nowrap; min-width: 85px;
+}
+.tab.active { color: #f97316; border-bottom-color: #f97316; background: white; }
+.tab:hover:not(.active) { background: #e8e8e8; color: #555; }
+
+/* EXERCISES */
+.exercise { display: none; padding: 28px 30px; }
+.exercise.active { display: block; }
+.ex-title { font-size: 1.22em; font-weight: 800; color: #222; margin-bottom: 4px; }
+.ex-sub   { color: #aaa; font-size: 0.88em; margin-bottom: 18px; }
+
+/* PROGRESS */
+.prog-wrap { height: 6px; background: #eee; border-radius: 3px; margin-bottom: 22px; }
+.prog-bar  { height: 100%; background: linear-gradient(90deg,#f97316,#dc2626); border-radius: 3px; transition: width 0.4s; }
+
+/* GRAMMAR REFERENCE BOX */
+.gram-box {
+  background: #fff7ed; border: 2px solid #fed7aa;
+  border-radius: 12px; padding: 13px 17px; margin-bottom: 20px; font-size: 0.87em;
+}
+.gram-box strong { color: #c2410c; display: block; margin-bottom: 8px; }
+.gram-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.gram-rule {
+  background: white; border-radius: 8px; padding: 5px 11px;
+  border: 1px solid #fed7aa; font-size: 0.87em; color: #555;
+}
+.gram-rule b { color: #ea580c; }
+
+/* ── EX 1 MATCHING ── */
+.match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.match-col  { display: flex; flex-direction: column; gap: 7px; }
+.col-label  { font-size: 0.76em; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #bbb; text-align: center; margin-bottom: 4px; }
+.mword, .mdef {
+  padding: 10px 13px; border-radius: 10px; cursor: pointer;
+  border: 2px solid transparent; transition: all 0.18s;
+  font-size: 0.87em; text-align: center; user-select: none; line-height: 1.35;
+}
+.mword { background: #fff7ed; color: #c2410c; font-weight: 700; }
+.mdef  { background: #fef9ee; color: #92400e; font-size: 0.82em; }
+.mword:hover:not(.correct), .mdef:hover:not(.correct) { transform: scale(1.025); box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+.mword.sel { background: #f97316; border-color: #f97316; color: white; }
+.mdef.sel  { background: #dc2626; border-color: #dc2626; color: white; }
+.mword.correct, .mdef.correct { background: #22c55e; border-color: #22c55e; color: white; cursor: default; }
+.mword.wrong,   .mdef.wrong   { background: #ef4444; border-color: #ef4444; color: white; animation: shake .35s; }
+
+/* ── EX 2 MULTIPLE CHOICE ── */
+.q-box { background: #fafafa; border-radius: 12px; padding: 17px 19px; margin-bottom: 15px; }
+.q-box > p { font-weight: 700; color: #222; margin-bottom: 12px; font-size: 0.97em; line-height: 1.55; }
+.options { display: flex; flex-direction: column; gap: 7px; }
+.opt {
+  padding: 11px 15px; border: 2px solid #e0e0e0; border-radius: 9px;
+  cursor: pointer; font-size: 0.92em; color: #444; transition: all 0.18s;
+}
+.opt:hover:not(.correct):not(.wrong):not(.dim) { border-color: #f97316; background: #fff7ed; }
+.opt.correct { background: #dcfce7; border-color: #22c55e; color: #15803d; font-weight: 700; pointer-events: none; }
+.opt.wrong   { background: #fee2e2; border-color: #ef4444; color: #b91c1c; animation: shake .35s; pointer-events: none; }
+.opt.dim     { pointer-events: none; opacity: 0.5; }
+
+/* ── EX 3 FILL IN BLANK ── */
+.word-bank {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  background: #fff7ed; border-radius: 12px; padding: 13px; margin-bottom: 20px;
+}
+.chip {
+  padding: 6px 15px; background: white; border: 2px solid #f97316;
+  border-radius: 20px; cursor: pointer; font-size: 0.88em; font-weight: 700;
+  color: #c2410c; transition: all 0.18s; user-select: none;
+}
+.chip:hover:not(.used) { background: #f97316; color: white; }
+.chip.sel  { background: #f97316; color: white; }
+.chip.used { opacity: 0.35; pointer-events: none; text-decoration: line-through; }
+.sent-box {
+  background: #fafafa; border-radius: 11px; padding: 13px 17px;
+  margin-bottom: 10px; border-left: 4px solid #f97316;
+  font-size: 0.97em; color: #333; line-height: 1.9;
+}
+.blank {
+  display: inline-block; min-width: 110px; border-bottom: 2.5px solid #f97316;
+  text-align: center; color: #ea580c; font-weight: 700; cursor: pointer;
+  padding: 1px 6px; margin: 0 4px; transition: all 0.18s;
+}
+.blank:hover { background: #fff7ed; border-radius: 4px; }
+.blank.correct { color: #16a34a; border-bottom-color: #22c55e; cursor: default; }
+.blank.wrong   { color: #dc2626; border-bottom-color: #ef4444; animation: shake .35s; }
+
+/* ── EX 4 DIALOGUE ORDER ── */
+.dial-hint {
+  background: #eff6ff; border: 2px solid #bfdbfe;
+  border-radius: 10px; padding: 11px 15px; margin-bottom: 18px;
+  font-size: 0.87em; color: #1e40af;
+}
+.dial-pool { display: flex; flex-direction: column; gap: 9px; }
+.dial-card {
+  padding: 12px 16px; background: #fafafa; border: 2px solid #e0e0e0;
+  border-radius: 10px; cursor: pointer; font-size: 0.92em; color: #333;
+  transition: all 0.2s; user-select: none; line-height: 1.45;
+}
+.dial-card:hover:not(.done):not(.wrong-d) { border-color: #f97316; background: #fff7ed; transform: translateX(4px); }
+.dial-card.done    { background: #dcfce7; border-color: #22c55e; color: #166534; cursor: default; font-weight: 600; }
+.dial-card.wrong-d { background: #fee2e2; border-color: #ef4444; animation: shake .35s; }
+.dnum { display: inline-flex; align-items: center; justify-content: center; background: #22c55e; color: white; border-radius: 50%; width: 22px; height: 22px; font-size: 0.78em; font-weight: 800; margin-right: 8px; flex-shrink: 0; }
+.who   { font-weight: 800; margin-right: 4px; }
+.who.a { color: #3b82f6; }
+.who.b { color: #f97316; }
+.who.c { color: #8b5cf6; }
+
+/* ── EX 5 GIVE DIRECTIONS ── */
+.dir-bank {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  background: #f0fdf4; border-radius: 12px; padding: 13px; margin-bottom: 18px;
+}
+.dchip {
+  padding: 7px 16px; background: white; border: 2px solid #22c55e;
+  border-radius: 20px; cursor: pointer; font-size: 0.88em; font-weight: 700;
+  color: #15803d; transition: all 0.18s; user-select: none;
+}
+.dchip:hover:not(.used) { background: #22c55e; color: white; }
+.dchip.sel  { background: #22c55e; color: white; }
+.dchip.used { opacity: 0.35; pointer-events: none; text-decoration: line-through; }
+.map-box {
+  background: #f0fdf4; border: 2px solid #86efac;
+  border-radius: 14px; padding: 22px 24px;
+  font-size: 1em; color: #333; line-height: 2.6;
+}
+.map-intro { font-size: 0.88em; color: #888; margin-bottom: 14px; font-style: italic; }
+.dblank {
+  display: inline-block; min-width: 95px; border-bottom: 2.5px solid #16a34a;
+  text-align: center; color: #15803d; font-weight: 700; cursor: pointer;
+  padding: 1px 6px; margin: 0 3px; transition: all 0.18s;
+}
+.dblank:hover { background: #dcfce7; border-radius: 4px; }
+.dblank.correct { color: #166534; border-bottom-color: #166534; cursor: default; }
+.dblank.wrong   { color: #dc2626; border-bottom-color: #ef4444; animation: shake .35s; }
+
+/* RESULT */
+.result-box {
+  display: none; text-align: center; padding: 20px 24px;
+  background: linear-gradient(135deg, #fff7ed, #fef3c7);
+  border-radius: 14px; margin-top: 22px;
+}
+.result-box.show { display: block; }
+.result-box .emo { font-size: 2.8em; }
+.result-box h3   { font-size: 1.2em; color: #333; margin: 8px 0 4px; }
+.result-box p    { color: #777; font-size: 0.9em; }
+
+/* BOTTOM BAR */
+.bottom-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 30px; background: #f8f8f8; border-top: 1px solid #eee;
+}
+.score-txt { font-weight: 800; color: #f97316; font-size: 1em; }
+.btn {
+  padding: 9px 22px; border: none; border-radius: 22px;
+  cursor: pointer; font-weight: 700; font-size: 0.88em; transition: all 0.18s;
+}
+.btn-p { background: #f97316; color: white; }
+.btn-p:hover { background: #ea580c; transform: scale(1.03); }
+.btn-s { background: #e8e8e8; color: #555; }
+.btn-s:hover { background: #d8d8d8; }
+
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25%  { transform: translateX(-6px); }
+  75%  { transform: translateX(6px); }
+}
+@media (max-width: 580px) {
+  .match-grid { grid-template-columns: 1fr; }
+  .exercise { padding: 18px 16px; }
+  body { padding: 10px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>🏙️ City, Comparatives &amp; Directions</h1>
+    <p>A2 Practice &nbsp;·&nbsp; 5 Exercises &nbsp;·&nbsp; 50 questions</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active"  onclick="goTab(0)">1 · City Words</button>
+    <button class="tab"         onclick="goTab(1)">2 · Comparatives</button>
+    <button class="tab"         onclick="goTab(2)">3 · Comp. Forms</button>
+    <button class="tab"         onclick="goTab(3)">4 · Dialogue</button>
+    <button class="tab"         onclick="goTab(4)">5 · Directions</button>
+  </div>
+
+  <!-- ════════════════════════════════════
+       EXERCISE 1 – CITY VOCABULARY MATCH
+  ════════════════════════════════════ -->
+  <div class="exercise active" id="ex1">
+    <div class="ex-title">Exercise 1: Match the City Words 🏙️</div>
+    <div class="ex-sub">Click a word on the left, then click its meaning on the right.</div>
+    <div class="prog-wrap"><div class="prog-bar" id="p1" style="width:0%"></div></div>
+
+    <div class="match-grid">
+      <div class="match-col">
+        <div class="col-label">Words</div>
+        <div class="mword" onclick="pickM(this,'word','bridge')">bridge</div>
+        <div class="mword" onclick="pickM(this,'word','crossroads')">crossroads</div>
+        <div class="mword" onclick="pickM(this,'word','monument')">monument</div>
+        <div class="mword" onclick="pickM(this,'word','playground')">playground</div>
+        <div class="mword" onclick="pickM(this,'word','roundabout')">roundabout</div>
+        <div class="mword" onclick="pickM(this,'word','stadium')">stadium</div>
+        <div class="mword" onclick="pickM(this,'word','subway')">subway</div>
+        <div class="mword" onclick="pickM(this,'word','town hall')">town hall</div>
+        <div class="mword" onclick="pickM(this,'word','traffic lights')">traffic lights</div>
+        <div class="mword" onclick="pickM(this,'word','police station')">police station</div>
+      </div>
+      <div class="match-col">
+        <div class="col-label">Meanings</div>
+        <div class="mdef" onclick="pickM(this,'def','monument')">🗿 a statue to remember something important</div>
+        <div class="mdef" onclick="pickM(this,'def','subway')">🚇 an underground train system</div>
+        <div class="mdef" onclick="pickM(this,'def','bridge')">🌉 a structure you go over to cross a river or road</div>
+        <div class="mdef" onclick="pickM(this,'def','traffic lights')">🚦 colored lights that control road traffic</div>
+        <div class="mdef" onclick="pickM(this,'def','playground')">🛝 a place where children play</div>
+        <div class="mdef" onclick="pickM(this,'def','roundabout')">🔄 a circular road where cars drive around</div>
+        <div class="mdef" onclick="pickM(this,'def','crossroads')">➕ a place where two roads cross</div>
+        <div class="mdef" onclick="pickM(this,'def','stadium')">🏟️ a large place where people watch sport</div>
+        <div class="mdef" onclick="pickM(this,'def','town hall')">🏛️ the main government building of a town</div>
+        <div class="mdef" onclick="pickM(this,'def','police station')">👮 the place where police officers work</div>
+      </div>
+    </div>
+    <div class="result-box" id="r1">
+      <div class="emo">🎉</div>
+      <h3>All matched! Great work!</h3>
+      <button class="btn btn-p" style="margin-top:12px" onclick="goTab(1)">Next →</button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════
+       EXERCISE 2 – COMPARATIVES MULTIPLE CHOICE
+  ════════════════════════════════════ -->
+  <div class="exercise" id="ex2">
+    <div class="ex-title">Exercise 2: Comparatives – Choose the Correct Form 📝</div>
+    <div class="ex-sub">Choose the correct comparative adjective in each sentence.</div>
+    <div class="prog-wrap"><div class="prog-bar" id="p2" style="width:0%"></div></div>
+
+    <div class="gram-box">
+      <strong>📌 Remember the rules:</strong>
+      <div class="gram-row">
+        <div class="gram-rule">short: old → <b>older</b></div>
+        <div class="gram-rule">double consonant: big → <b>bigger</b></div>
+        <div class="gram-rule">long: beautiful → <b>more beautiful</b></div>
+        <div class="gram-rule">irregular: good → <b>better</b></div>
+      </div>
+    </div>
+
+    <div class="q-box" id="q1">
+      <p>1. A stadium is _____ than a playground. <em>(big)</em></p>
+      <div class="options">
+        <div class="opt" onclick="qAns(this,'q1')">a) more big</div>
+        <div class="opt" onclick="qAns(this,'q1')" data-ok>b) bigger</div>
+        <div class="opt" onclick="qAns(this,'q1')">c) biggest</div>
+      </div>
+    </div>
+
+    <div class="q-box" id="q2">
+      <p>2. The subway is _____ than the bus. <em>(fast)</em></p>
+      <div class="options">
+        <div class="opt" onclick="qAns(this,'q2')" data-ok>a) faster</div>
+        <div class="opt" onclick="qAns(this,'q2')">b) more fast</div>
+        <div class="opt" onclick="qAns(this,'q2')">c) fastest</div>
+      </div>
+    </div>
+
+    <div class="q-box" id="q3">
+      <p>3. The town hall is _____ than the bus station. <em>(beautiful)</em></p>
+      <div class="options">
+        <div class="opt" onclick="qAns(this,'q3')">a) beautifuler</div>
+        <div class="opt" onclick="qAns(this,'q3')" data-ok>b) more beautiful</div>
+        <div class="opt" onclick="qAns(this,'q3')">c) most beautiful</div>
+      </div>
+    </div>
+
+    <div class="q-box" id="q4">
+      <p>4. The bridge is _____ than the crossing. <em>(long)</em></p>
+      <div class="options">
+        <div class="opt" onclick="qAns(this,'q4')">a) more long</div>
+        <div class="opt" onclick="qAns(this,'q4')" data-ok>b) longer</div>
+        <div class="opt" onclick="qAns(this,'q4')">c) longest</div>
+      </div>
+    </div>
+
+    <div class="q-box" id="q5">
+      <p>5. The church is _____ than the stadium. <em>(quiet)</em></p>
+      <div class="options">
+        <div class="opt" onclick="qAns(this,'q5')">a) more quiet</div>
+        <div class="opt" onclick="qAns(this,'q5')" data-ok>b) quieter</div>
+        <div class="opt" onclick="qAns(this,'q5')">c) most quiet</div>
+      </div>
+    </div>
+
+    <div class="q-box" id="q6">
+      <p>6. The monument is _____ than the playground. <em>(old)</em></p>
+      <div class="options">
+        <div class="opt" onclick="qAns(this,'q6')" data-ok>a) older</div>
+        <div class="opt" onclick="qAns(this,'q6')">b) more old</div>
+        <div class="opt" onclick="qAns(this,'q6')">c) oldest</div>
+      </div>
+    </div>
+
+    <div class="q-box" id="q7">
+      <p>7. The city centre is _____ than the suburbs. <em>(interesting)</em></p>
+      <div class="options">
+        <div class="opt" onclick="qAns(this,'q7')">a) interestinger</div>
+        <div class="opt" onclick="qAns(this,'q7')" data-ok>b) more interesting</div>
+        <div class="opt" onclick="qAns(this,'q7')">c) interestingest</div>
+      </div>
+    </div>
+
+    <div class="q-box" id="q8">
+      <p>8. The new subway is _____ than the old bus service. <em>(good)</em></p>
+      <div class="options">
+        <div class="opt" onclick="qAns(this,'q8')">a) gooder</div>
+        <div class="opt" onclick="qAns(this,'q8')" data-ok>b) better</div>
+        <div class="opt" onclick="qAns(this,'q8')">c) more good</div>
+      </div>
+    </div>
+
+    <div class="result-box" id="r2">
+      <div class="emo">⭐</div>
+      <h3>Quiz done!</h3>
+      <p id="r2sc"></p>
+      <button class="btn btn-p" style="margin-top:12px" onclick="goTab(2)">Next →</button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════
+       EXERCISE 3 – COMPARATIVES FILL IN
+  ════════════════════════════════════ -->
+  <div class="exercise" id="ex3">
+    <div class="ex-title">Exercise 3: Fill in the Comparative Form 🔤</div>
+    <div class="ex-sub">Click the correct comparative from the box, then click the blank in the sentence.</div>
+    <div class="prog-wrap"><div class="prog-bar" id="p3" style="width:0%"></div></div>
+
+    <div class="gram-box">
+      <strong>📌 Remember the rules:</strong>
+      <div class="gram-row">
+        <div class="gram-rule">short: old → <b>older</b></div>
+        <div class="gram-rule">double consonant: big → <b>bigger</b></div>
+        <div class="gram-rule">long: beautiful → <b>more beautiful</b></div>
+        <div class="gram-rule">irregular: good → <b>better</b></div>
+      </div>
+    </div>
+
+    <div class="word-bank" id="wb3">
+      <div class="chip" onclick="pickChip(this,'bigger')">bigger</div>
+      <div class="chip" onclick="pickChip(this,'faster')">faster</div>
+      <div class="chip" onclick="pickChip(this,'older')">older</div>
+      <div class="chip" onclick="pickChip(this,'more beautiful')">more beautiful</div>
+      <div class="chip" onclick="pickChip(this,'longer')">longer</div>
+      <div class="chip" onclick="pickChip(this,'quieter')">quieter</div>
+      <div class="chip" onclick="pickChip(this,'more interesting')">more interesting</div>
+      <div class="chip" onclick="pickChip(this,'better')">better</div>
+    </div>
+
+    <div class="sent-box">1. A stadium is <span class="blank" onclick="fillB(this,'bigger')" data-ans="bigger">_______</span> than a church. <em>(big)</em></div>
+    <div class="sent-box">2. The subway is <span class="blank" onclick="fillB(this,'faster')" data-ans="faster">_______</span> than walking. <em>(fast)</em></div>
+    <div class="sent-box">3. The monument is <span class="blank" onclick="fillB(this,'older')" data-ans="older">_______</span> than the traffic lights. <em>(old)</em></div>
+    <div class="sent-box">4. The town hall is <span class="blank" onclick="fillB(this,'more beautiful')" data-ans="more beautiful">_______</span> than the bus station. <em>(beautiful)</em></div>
+    <div class="sent-box">5. This road is <span class="blank" onclick="fillB(this,'longer')" data-ans="longer">_______</span> than the other one. <em>(long)</em></div>
+    <div class="sent-box">6. The playground is <span class="blank" onclick="fillB(this,'quieter')" data-ans="quieter">_______</span> than the crossroads. <em>(quiet)</em></div>
+    <div class="sent-box">7. The city centre is <span class="blank" onclick="fillB(this,'more interesting')" data-ans="more interesting">_______</span> than the suburbs. <em>(interesting)</em></div>
+    <div class="sent-box">8. The new subway is <span class="blank" onclick="fillB(this,'better')" data-ans="better">_______</span> than the old bus service. <em>(good)</em></div>
+
+    <div class="result-box" id="r3">
+      <div class="emo">🏆</div>
+      <h3>All blanks filled! Excellent!</h3>
+      <button class="btn btn-p" style="margin-top:12px" onclick="goTab(3)">Next →</button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════
+       EXERCISE 4 – DIALOGUE ORDER
+  ════════════════════════════════════ -->
+  <div class="exercise" id="ex4">
+    <div class="ex-title">Exercise 4: Order the Dialogue 💬</div>
+    <div class="ex-sub">Click the sentences in the correct order — start with number 1!</div>
+    <div class="prog-wrap"><div class="prog-bar" id="p4" style="width:0%"></div></div>
+
+    <div class="dial-hint">
+      💡 <strong>Tip:</strong> &nbsp;
+      <span class="who a">Blue = Person A</span> &nbsp;·&nbsp;
+      <span class="who b">Orange = Person B</span> &nbsp;·&nbsp;
+      <span class="who c">Purple = Person C</span>
+    </div>
+
+    <div class="dial-pool" id="dp">
+      <div class="dial-card" data-order="4" onclick="clickDial(this)"><span class="who c">C:</span> "Yes! Go down this road."</div>
+      <div class="dial-card" data-order="1" onclick="clickDial(this)"><span class="who a">A:</span> "Excuse me. Is there a police station near here?"</div>
+      <div class="dial-card" data-order="7" onclick="clickDial(this)"><span class="who c">C:</span> "It's on the left."</div>
+      <div class="dial-card" data-order="3" onclick="clickDial(this)"><span class="who a">A:</span> "Excuse me. Do you know the way to the police station?"</div>
+      <div class="dial-card" data-order="5" onclick="clickDial(this)"><span class="who c">C:</span> "Take the second road on the right."</div>
+      <div class="dial-card" data-order="2" onclick="clickDial(this)"><span class="who b">B:</span> "Sorry, but I'm not from round here."</div>
+      <div class="dial-card" data-order="8" onclick="clickDial(this)"><span class="who a">A:</span> "Thank you very much!"</div>
+      <div class="dial-card" data-order="6" onclick="clickDial(this)"><span class="who c">C:</span> "Go past the playground."</div>
+    </div>
+
+    <div class="result-box" id="r4">
+      <div class="emo">🌟</div>
+      <h3>Perfect! Dialogue complete!</h3>
+      <button class="btn btn-p" style="margin-top:12px" onclick="goTab(4)">Next →</button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════
+       EXERCISE 5 – GIVE DIRECTIONS FILL IN
+  ════════════════════════════════════ -->
+  <div class="exercise" id="ex5">
+    <div class="ex-title">Exercise 5: Give Directions 🗺️</div>
+    <div class="ex-sub">Click a phrase from the box, then click the correct blank.</div>
+    <div class="prog-wrap"><div class="prog-bar" id="p5" style="width:0%"></div></div>
+
+    <div class="dir-bank" id="db5">
+      <div class="dchip" onclick="pickD(this,'Go down')">Go down</div>
+      <div class="dchip" onclick="pickD(this,'Take')">Take</div>
+      <div class="dchip" onclick="pickD(this,'Go past')">Go past</div>
+      <div class="dchip" onclick="pickD(this,'go over')">go over</div>
+      <div class="dchip" onclick="pickD(this,'turn left')">turn left</div>
+      <div class="dchip" onclick="pickD(this,'on the right')">on the right</div>
+      <div class="dchip" onclick="pickD(this,'on the left')">on the left</div>
+      <div class="dchip" onclick="pickD(this,'It\'s on the left')">It's on the left</div>
+    </div>
+
+    <p class="map-intro">📍 You are at the crossroads near the subway. You want to get to the town hall.</p>
+
+    <div class="map-box">
+      <span class="dblank" onclick="fillD(this,'Go down')" data-dans="Go down">_______</span> this road to the traffic lights.
+      <br><br>
+      <span class="dblank" onclick="fillD(this,'Take')" data-dans="Take">_______</span> the second road on the right.
+      <br><br>
+      <span class="dblank" onclick="fillD(this,'Go past')" data-dans="Go past">_______</span> the monument on your left.
+      <br><br>
+      You need to <span class="dblank" onclick="fillD(this,'go over')" data-dans="go over">_______</span> the bridge.
+      <br><br>
+      <span class="dblank" onclick="fillD(this,'It\'s on the left')" data-dans="It's on the left">_______</span>.
+    </div>
+
+    <div class="result-box" id="r5">
+      <div class="emo">🎊</div>
+      <h3>Amazing! All 5 exercises complete!</h3>
+      <p>You practised city words, comparatives, and directions!</p>
+      <button class="btn btn-s" style="margin-top:12px" onclick="location.reload()">Start Again 🔄</button>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <span class="score-txt" id="scoretxt">⭐ Score: 0 pts</span>
+    <button class="btn btn-s" onclick="location.reload()">Reset All</button>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+/* ─── SCORE ─── */
+let totalPts = 0;
+function addPts(n) {
+  totalPts += n;
+  document.getElementById('scoretxt').textContent = '⭐ Score: ' + totalPts + ' pts';
+}
+
+/* ─── TABS ─── */
+function goTab(n) {
+  document.querySelectorAll('.exercise').forEach((e,i) => e.classList.toggle('active', i===n));
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', i===n));
+}
+
+/* ════════════════════════════
+   EX 1 – MATCHING
+════════════════════════════ */
+let mSel = {word:null, def:null, wordEl:null, defEl:null};
+let mDone = 0;
+
+function pickM(el, side, val) {
+  if (el.classList.contains('correct')) return;
+  if (mSel[side+'El']) mSel[side+'El'].classList.remove('sel');
+  mSel[side] = val;
+  mSel[side+'El'] = el;
+  el.classList.add('sel');
+
+  if (mSel.word && mSel.def) {
+    if (mSel.word === mSel.def) {
+      mSel.wordEl.classList.replace('sel','correct');
+      mSel.defEl.classList.replace('sel','correct');
+      mSel.wordEl.onclick = null;
+      mSel.defEl.onclick = null;
+      mDone++;
+      addPts(10);
+      document.getElementById('p1').style.width = (mDone/10*100)+'%';
+      if (mDone === 10) document.getElementById('r1').classList.add('show');
+    } else {
+      const [a, b] = [mSel.wordEl, mSel.defEl];
+      a.classList.add('wrong'); b.classList.add('wrong');
+      setTimeout(() => { a.classList.remove('wrong','sel'); b.classList.remove('wrong','sel'); }, 600);
+    }
+    mSel = {word:null, def:null, wordEl:null, defEl:null};
+  }
+}
+
+/* ════════════════════════════
+   EX 2 – MULTIPLE CHOICE
+════════════════════════════ */
+let qDone2 = 0, qRight2 = 0;
+
+function qAns(el, qId) {
+  const box = document.getElementById(qId);
+  if (box.dataset.done) return;
+  box.dataset.done = '1';
+  const ok = el.hasAttribute('data-ok');
+  if (ok) { el.classList.add('correct'); addPts(10); qRight2++; }
+  else {
+    el.classList.add('wrong');
+    box.querySelector('[data-ok]').classList.add('correct');
+  }
+  box.querySelectorAll('.opt').forEach(o => {
+    if (!o.classList.contains('correct') && !o.classList.contains('wrong')) o.classList.add('dim');
+  });
+  qDone2++;
+  document.getElementById('p2').style.width = (qDone2/8*100)+'%';
+  if (qDone2 === 8) {
+    document.getElementById('r2sc').textContent = 'You got ' + qRight2 + ' out of 8 correct!';
+    setTimeout(() => document.getElementById('r2').classList.add('show'), 400);
+  }
+}
+
+/* ════════════════════════════
+   EX 3 – FILL IN COMPARATIVE
+════════════════════════════ */
+let selChip = null, selChipEl = null, fillDone3 = 0;
+
+function pickChip(el, val) {
+  if (selChipEl) selChipEl.classList.remove('sel');
+  selChip = val; selChipEl = el;
+  el.classList.add('sel');
+}
+
+function fillB(el, correctAns) {
+  if (el.classList.contains('correct')) return;
+  if (!selChip) { el.style.animation='shake .35s'; setTimeout(()=>el.style.animation='',400); return; }
+  if (selChip === correctAns) {
+    el.textContent = selChipEl.textContent;
+    el.classList.add('correct');
+    selChipEl.classList.add('used');
+    fillDone3++; addPts(10);
+    document.getElementById('p3').style.width = (fillDone3/8*100)+'%';
+    if (fillDone3 === 8) document.getElementById('r3').classList.add('show');
+  } else {
+    el.classList.add('wrong');
+    setTimeout(() => el.classList.remove('wrong'), 600);
+  }
+  selChipEl.classList.remove('sel');
+  selChip = null; selChipEl = null;
+}
+
+/* ════════════════════════════
+   EX 4 – DIALOGUE ORDER
+════════════════════════════ */
+let dialNext = 1;
+
+function clickDial(el) {
+  if (el.classList.contains('done')) return;
+  const order = parseInt(el.dataset.order);
+  if (order === dialNext) {
+    const numSpan = document.createElement('span');
+    numSpan.className = 'dnum';
+    numSpan.textContent = order;
+    el.insertBefore(numSpan, el.firstChild);
+    el.classList.add('done');
+    el.onclick = null;
+    dialNext++;
+    addPts(10);
+    document.getElementById('p4').style.width = ((dialNext-1)/8*100)+'%';
+    if (dialNext > 8) setTimeout(() => document.getElementById('r4').classList.add('show'), 400);
+  } else {
+    el.classList.add('wrong-d');
+    setTimeout(() => el.classList.remove('wrong-d'), 500);
+  }
+}
+
+/* ════════════════════════════
+   EX 5 – GIVE DIRECTIONS
+════════════════════════════ */
+let selD = null, selDEl = null, fillDone5 = 0;
+
+function pickD(el, val) {
+  if (selDEl) selDEl.classList.remove('sel');
+  selD = val; selDEl = el;
+  el.classList.add('sel');
+}
+
+function fillD(el, correctAns) {
+  if (el.classList.contains('correct')) return;
+  if (!selD) { el.style.animation='shake .35s'; setTimeout(()=>el.style.animation='',400); return; }
+  if (selD === correctAns) {
+    el.textContent = selDEl.textContent;
+    el.classList.add('correct');
+    selDEl.classList.add('used');
+    fillDone5++; addPts(10);
+    document.getElementById('p5').style.width = (fillDone5/5*100)+'%';
+    if (fillDone5 === 5) setTimeout(() => document.getElementById('r5').classList.add('show'), 400);
+  } else {
+    el.classList.add('wrong');
+    setTimeout(() => el.classList.remove('wrong'), 600);
+  }
+  selDEl.classList.remove('sel');
+  selD = null; selDEl = null;
+}
+</script>
+</body>
+</html>
